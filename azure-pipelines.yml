@@ -16,12 +16,11 @@ variables:
   modulePath: '$(GOPATH)/src/spike' # Path to the module's code
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: pwd 
+  displayName: 'Where am I'
 
-- script: |
-    find .
-  displayName: 'Getting bearings'
+- script: go env
+  displayName: 'Checking Go environment'
 
 - script: |
     mkdir -p '$(GOBIN)'
@@ -33,8 +32,12 @@ steps:
     echo '##vso[task.prependpath]$(GOROOT)/bin'
   displayName: 'Set up the Go workspace'
 
-- script: go env
-  displayName: 'Checking Go environment'
+- script: |
+    echo 'Getting path'
+    pwd
+    echo 'Finding what's here'
+    find .
+  displayName: 'Getting bearings'
 
 - script: |
     echo $GOPATH
