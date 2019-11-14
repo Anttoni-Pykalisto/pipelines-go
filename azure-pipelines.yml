@@ -43,7 +43,7 @@ steps:
     echo $GOPATH
     echo $GOBIN
     echo $GOROOT
-    echo $modulePath
+    echo $(modulePath)
   displayName: 'Checking declared variables'
 
 - script: go get -v -t -d ./...
@@ -51,12 +51,17 @@ steps:
   displayName: 'go get dependencies'
 
 - script: |
+    pwd
     if [ -f Gopkg.toml ]; then
         curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
         dep ensure
     fi
   workingDirectory: '$(modulePath)'
   displayName: 'Download dep and run `dep ensure`'
+
+- script: go build -v .
+  workingDirectory: '$(modulePath)'
+  displayName: 'Build'
 
 - script: go test -v ./...
   workingDirectory: '$(modulePath)'
