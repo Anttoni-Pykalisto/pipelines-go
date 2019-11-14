@@ -9,10 +9,26 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
+  GOBIN:  '$(GOPATH)/bin' # Go binaries path
+  GOROOT: '/usr/local/go1.11' # Go installation path
+  modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)' # Path to the module's code
+
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
 - script: |
-    ls -a
+    find .
   displayName: 'Getting bearings'
+
+- script: go env
+  displayName: 'Checking Go environment'
+
+- script: |
+    echo $GOPATH
+    echo $GOBIN
+    echo $GOROOT
+    echo $modulePath
+  displayName: 'Checking declared variables'
