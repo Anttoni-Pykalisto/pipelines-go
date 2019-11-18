@@ -53,15 +53,22 @@ steps:
 - script: |
     pwd
     if [ -f Gopkg.toml ]; then
+        echo "Found toml file"
         curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
         dep ensure
     fi
   workingDirectory: '$(modulePath)'
   displayName: 'Download dep and run `dep ensure`'
 
-- script: go build -v .
-  workingDirectory: '$(modulePath)'
-  displayName: 'Build'
+- script: |
+    echo "Project structure is:"
+    find .
+  workingDirectory: $(system.defaultWorkingDirectory)
+  displayName: 'Showing final project struture'
+
+# - script: go build -v .
+#   workingDirectory: '$(modulePath)'
+#   displayName: 'Build'
 
 - script: go test -v ./...
   workingDirectory: '$(modulePath)'
