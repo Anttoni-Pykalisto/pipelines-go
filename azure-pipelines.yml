@@ -47,7 +47,7 @@ steps:
   displayName: 'Checking declared variables'
 
 - script: go get -v -t -d ./...
-  workingDirectory: '$(modulePath)'
+  workingDirectory: '$(system.defaultWorkingDirectory)'
   displayName: 'go get dependencies'
 
 - script: |
